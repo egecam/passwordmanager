@@ -65,19 +65,29 @@ if (isset($_POST['submit'])) {
 
     // Insert the new data into the database
     $createQuery = "INSERT INTO userdata (username, password) VALUES ('$newUsername', '$newPassword')";
-    $deleteQuery = "DELETE FROM userdata WHERE id = '$user_id'";
 
     if ($conn->query($createQuery) === TRUE) {
         // Refresh the page to show the updated data
-        header("Location: main.php");
-        exit();
-    } else if ($conn->query($deleteQuery) === TRUE) {
         header("Location: main.php");
         exit();
     } else {
         echo "Error: " . $query . "<br>" . $conn->error;
     }
 }
+
+if (isset($_POST['submit2'])) {
+
+    $deleteQuery = "DELETE FROM userdata WHERE user_id = $user_id";
+
+    if ($conn->query($deleteQuery) === TRUE) {
+        // Refresh the page to show the updated data
+        header("Location: main.php");
+        exit();
+    } else {
+        echo "Error: " . $query . "<br>" . $conn->error;
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -108,7 +118,7 @@ if (isset($_POST['submit'])) {
 
                 <form method="Post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                     <td>
-                        <input type="submit" name="submit" value="Delete Data">
+                        <input type="submit" name="submit2" value="Delete Data">
                     </td>
                 </form>
             </tr>
