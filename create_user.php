@@ -16,10 +16,10 @@ if (isset($_POST['submit'])) {
     $newPassword = $_POST['new_password'];
     
     // Insert the new user into the database
-    $query = "INSERT INTO users (username, password) VALUES ('$newUsername', '$newPassword')";
+    $query = "INSERT INTO $dbname (username, password) VALUES ('$newUsername', '$newPassword')";
     
     if ($conn->query($query) === TRUE) {
-        echo "New user created successfully!";
+        echo "New user created successfully! Will redirect in 5 seconds...";
     } else {
         echo "Error: " . $query . "<br>" . $conn->error;
     }
@@ -28,13 +28,5 @@ if (isset($_POST['submit'])) {
     $conn->close();
 }
 
-$url = "login_screen.php";
-
-function redirect($url, $statusCode = 303)
-{
-   header('Location: ' . $url, true, $statusCode);
-
-}
-
-redirect($url);
+header('refresh: 5; url=login_screen.php');
 ?>

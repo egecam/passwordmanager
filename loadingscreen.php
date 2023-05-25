@@ -26,7 +26,7 @@ if ($conn->query($sql) === TRUE) {
 $conn->select_db($database);
 
 // Create table
-$sql = "CREATE TABLE IF NOT EXISTS your_table (
+$sql = "CREATE TABLE IF NOT EXISTS users (
     user_id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(30) NOT NULL,
     password VARCHAR(30) NOT NULL
@@ -48,7 +48,7 @@ if ($conn->query($sql) === TRUE) {
 $conn->select_db($database2);
 
 // Create table
-$sql = "CREATE TABLE IF NOT EXISTS your_table (
+$sql = "CREATE TABLE IF NOT EXISTS userdata (
     user_id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(30) NOT NULL,
     password VARCHAR(30) NOT NULL

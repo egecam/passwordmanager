@@ -55,7 +55,7 @@ if (isset($_POST['submit'])) {
     $newPassword = encrypt($_POST['new_password']);
     
     // Insert the new data into the database
-    $query = "INSERT INTO userdata (data_id, username, password) VALUES ('$newUsername', '$newPassword')";
+    $query = "INSERT INTO userdata (username, password) VALUES ('$newUsername', '$newPassword')";
     
     if ($conn->query($query) === TRUE) {
         // Refresh the page to show the updated data
