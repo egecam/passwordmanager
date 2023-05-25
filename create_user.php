@@ -1,12 +1,10 @@
 <?php
 if (isset($_POST['submit'])) {
-    // Database connection details
     $servername = "localhost";
-    $username = "username";
-    $password = "password";
+    $username = "root";
+    $password = "";
     $dbname = "users";
     
-    // Establish a connection to the database
     $conn = new mysqli($servername, $username, $password, $dbname);
     
     // Check the connection
