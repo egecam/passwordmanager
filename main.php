@@ -1,9 +1,16 @@
 <?php
+
+function linkResource($rel, $href)
+{
+    echo "<link rel='{$rel}' href='{$href}'>";
+}
+
 // Database connection details
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "userdata";
+
 
 // Establish a connection to the database
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -14,7 +21,8 @@ if ($conn->connect_error) {
 }
 
 // Function to encrypt a string
-function encrypt($data) {
+function encrypt($data)
+{
     // Perform encryption logic here (e.g., using a secure encryption algorithm)
     // ...
     $encryptionKey = 'your_encryption_key';
@@ -23,7 +31,8 @@ function encrypt($data) {
 }
 
 // Function to decrypt a string
-function decrypt($encryptedData) {
+function decrypt($encryptedData)
+{
     // Perform decryption logic here (e.g., using the same encryption algorithm)
     // ...
     $encryptionKey = 'your_encryption_key';
@@ -43,7 +52,7 @@ if ($result->num_rows > 0) {
         // Decrypt the login information
         $username = decrypt($row['username']);
         $password = decrypt($row['password']);
-        
+
         // Add decrypted login information to the array
         $logins[] = array('username' => $username, 'password' => $password);
     }
@@ -53,12 +62,16 @@ if ($result->num_rows > 0) {
 if (isset($_POST['submit'])) {
     $newUsername = encrypt($_POST['new_username']);
     $newPassword = encrypt($_POST['new_password']);
-    
+
     // Insert the new data into the database
-    $query = "INSERT INTO userdata (username, password) VALUES ('$newUsername', '$newPassword')";
-    
-    if ($conn->query($query) === TRUE) {
+    $createQuery = "INSERT INTO userdata (username, password) VALUES ('$newUsername', '$newPassword')";
+    $deleteQuery = "DELETE FROM userdata WHERE id = '$user_id'";
+
+    if ($conn->query($createQuery) === TRUE) {
         // Refresh the page to show the updated data
+        header("Location: main.php");
+        exit();
+    } else if ($conn->query($deleteQuery) === TRUE) {
         header("Location: main.php");
         exit();
     } else {
@@ -69,12 +82,15 @@ if (isset($_POST['submit'])) {
 
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Password Manager</title>
+    <link rel="stylesheet" href="style.css" media="screen">
 </head>
+
 <body>
     <h2>Password Manager</h2>
-    
+
     <h3>Login Information:</h3>
     <table>
         <tr>
@@ -83,21 +99,32 @@ if (isset($_POST['submit'])) {
         </tr>
         <?php foreach ($logins as $login) { ?>
             <tr>
-                <td><?php echo $login['username']; ?></td>
-                <td><?php echo $login['password']; ?></td>
+                <td>
+                    <?php echo $login['username']; ?>
+                </td>
+                <td>
+                    <?php echo $login['password']; ?>
+                </td>
+
+                <form method="Post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                    <td>
+                        <input type="submit" name="submit" value="Delete Data">
+                    </td>
+                </form>
             </tr>
         <?php } ?>
     </table>
-    
+
     <h3>Create New Data:</h3>
     <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
         <label for="new_username">Username:</label>
         <input type="text" name="new_username" required><br><br>
-        
+
         <label for="new_password">Password:</label>
         <input type="password" name="new_password" required><br><br>
-        
+
         <input type="submit" name="submit" value="Create Data">
     </form>
 </body>
+
 </html>
