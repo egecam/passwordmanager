@@ -1,0 +1,32 @@
+<?php
+if (isset($_POST['submit'])) {
+    // Database connection details
+    $servername = "localhost";
+    $username = "username";
+    $password = "password";
+    $dbname = "users";
+    
+    // Establish a connection to the database
+    $conn = new mysqli($servername, $username, $password, $dbname);
+    
+    // Check the connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+    
+    $newUsername = $_POST['new_username'];
+    $newPassword = $_POST['new_password'];
+    
+    // Insert the new user into the database
+    $query = "INSERT INTO users (username, password) VALUES ('$newUsername', '$newPassword')";
+    
+    if ($conn->query($query) === TRUE) {
+        echo "New user created successfully!";
+    } else {
+        echo "Error: " . $query . "<br>" . $conn->error;
+    }
+    
+    // Close the database connection
+    $conn->close();
+}
+?>
