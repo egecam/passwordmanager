@@ -3,7 +3,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "users";
+$dbname = "userdata";
 
 // Establish a connection to the database
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -14,21 +14,25 @@ if ($conn->connect_error) {
 }
 
 // Function to encrypt a string
-function encrypt($string) {
+function encrypt($data) {
     // Perform encryption logic here (e.g., using a secure encryption algorithm)
     // ...
-    return $encryptedString;
+    $encryptionKey = 'your_encryption_key';
+    $encryptedData = openssl_encrypt($data, 'AES-256-CBC', $encryptionKey, 0, substr(hash('sha256', $encryptionKey), 0, 16));
+    return $encryptedData;
 }
 
 // Function to decrypt a string
-function decrypt($encryptedString) {
+function decrypt($encryptedData) {
     // Perform decryption logic here (e.g., using the same encryption algorithm)
     // ...
-    return $decryptedString;
+    $encryptionKey = 'your_encryption_key';
+    $decryptedData = openssl_decrypt($encryptedData, 'AES-256-CBC', $encryptionKey, 0, substr(hash('sha256', $encryptionKey), 0, 16));
+    return $decryptedData;
 }
 
 // Fetch login information from the database
-$query = "SELECT * FROM login_info";
+$query = "SELECT * FROM userdata";
 $result = $conn->query($query);
 
 // Store decrypted login information
@@ -51,7 +55,7 @@ if (isset($_POST['submit'])) {
     $newPassword = encrypt($_POST['new_password']);
     
     // Insert the new data into the database
-    $query = "INSERT INTO login_info (username, password) VALUES ('$newUsername', '$newPassword')";
+    $query = "INSERT INTO userdata (data_id, username, password) VALUES ('$newUsername', '$newPassword')";
     
     if ($conn->query($query) === TRUE) {
         // Refresh the page to show the updated data
