@@ -27,4 +27,14 @@ if (isset($_POST['submit'])) {
     // Close the database connection
     $conn->close();
 }
+
+$url = "login_screen.php";
+
+function redirect($url, $statusCode = 303)
+{
+   header('Location: ' . $url, true, $statusCode);
+
+}
+
+redirect($url);
 ?>
