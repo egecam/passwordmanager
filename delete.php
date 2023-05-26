@@ -20,6 +20,8 @@ if (isset($_GET["user_id"])) {
     $sql = "DELETE FROM userdata WHERE user_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id);
+
+    $stmt->execute();
     
 }
 

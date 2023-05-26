@@ -105,7 +105,7 @@ $result = $conn->query($sql);
     </thead>
     <tbody>
             <?php foreach ($logins as $login) { ?>
-                <?php $row = $result->fetch_assoc() ?>
+                <?php $row = $result->fetch_assoc(); ?>
                 <tr>
                     <td><?php echo $login['username']; ?></td>
                     <td><?php echo $login['password']; ?></td>
