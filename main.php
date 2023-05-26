@@ -75,18 +75,12 @@ if (isset($_POST['submit'])) {
     }
 }
 
-if (isset($_POST['submit2'])) {
 
-    $deleteQuery = "DELETE FROM userdata WHERE user_id = $user_id";
 
-    if ($conn->query($deleteQuery) === TRUE) {
-        // Refresh the page to show the updated data
-        header("Location: main.php");
-        exit();
-    } else {
-        echo "Error: " . $query . "<br>" . $conn->error;
-    }
-}
+// Retrieve data from the database
+$sql = "SELECT user_id, username, password FROM userdata";
+$result = $conn->query($sql);
+
 
 ?>
 
@@ -103,27 +97,26 @@ if (isset($_POST['submit2'])) {
 
     <h3>Login Information:</h3>
     <table>
+    <thead>
         <tr>
             <th>Username</th>
             <th>Password</th>
         </tr>
-        <?php foreach ($logins as $login) { ?>
-            <tr>
-                <td>
-                    <?php echo $login['username']; ?>
-                </td>
-                <td>
-                    <?php echo $login['password']; ?>
-                </td>
-
-                <form method="Post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+    </thead>
+    <tbody>
+            <?php foreach ($logins as $login) { ?>
+                <?php $row = $result->fetch_assoc() ?>
+                <tr>
+                    <td><?php echo $login['username']; ?></td>
+                    <td><?php echo $login['password']; ?></td>
                     <td>
-                        <input type="submit" name="submit2" value="Delete Data">
+                    <?php echo "<td><a href='delete.php?user_id=".$row["user_id"]."'> <button>Delete</button></a></td>"; ?>
                     </td>
-                </form>
-            </tr>
-        <?php } ?>
-    </table>
+                </tr>
+            <?php } ?>
+
+    </tbody>
+</table>
 
     <h3>Create New Data:</h3>
     <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
