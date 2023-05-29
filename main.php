@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 function linkResource($rel, $href)
 {
     echo "<link rel='{$rel}' href='{$href}'>";
@@ -41,7 +41,8 @@ function decrypt($encryptedData)
 }
 
 // Fetch login information from the database
-$query = "SELECT * FROM userdata";
+$user_id = $_SESSION["user_id"];
+$query = "SELECT * FROM userdata WHERE user_id = $user_id";
 $result = $conn->query($query);
 
 // Store decrypted login information
@@ -64,7 +65,7 @@ if (isset($_POST['submit'])) {
     $newPassword = encrypt($_POST['new_password']);
 
     // Insert the new data into the database
-    $createQuery = "INSERT INTO userdata (username, password) VALUES ('$newUsername', '$newPassword')";
+    $createQuery = "INSERT INTO userdata (username, password, user_id) VALUES ('$newUsername', '$newPassword', '$user_id')";
 
     if ($conn->query($createQuery) === TRUE) {
         // Refresh the page to show the updated data
@@ -76,10 +77,9 @@ if (isset($_POST['submit'])) {
 }
 
 
-
-// Retrieve data from the database
-$sql = "SELECT * FROM userdata";
+$sql = "SELECT * FROM userdata WHERE user_id = '$user_id'";
 $result = $conn->query($sql);
+
 
 
 ?>
@@ -104,10 +104,11 @@ $result = $conn->query($sql);
         </tr>
     </thead>
     <tbody>
+        
             <?php foreach ($logins as $login) { ?>
                 <?php $row = $result->fetch_assoc(); ?>
                 <tr>
-                    <td><?php echo $login['username']; ?></td>
+                    <td><?php echo $login["username"] ?></td>
                     <td><?php echo $login['password']; ?></td>
                     <td>
                     <?php echo "<td><a href='delete.php?data_id=".$row["data_id"]."'> <button>Delete</button></a></td>"; ?>

@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Database connection details
 $servername = "localhost";
 $username = "root";
@@ -34,6 +35,8 @@ function validateUser($username, $password)
     // SQL query to check if the username and password exist in the database
     $query = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
     $result = $conn->query($query);
+    $row = $result->fetch_assoc();
+    $_SESSION["user_id"] = $row["user_id"];
 
     if ($result->num_rows == 1) {
         // User credentials are valid
