@@ -15,6 +15,16 @@ if (isset($_POST['submit'])) {
     $newUsername = $_POST['new_username'];
     $newPassword = $_POST['new_password'];
 
+    function encrypt($data)
+{
+    // Perform encryption logic here (e.g., using a secure encryption algorithm)
+    // ...
+    $encryptionKey =  "7075166676";
+    $encryptedData = openssl_encrypt($data, 'AES-256-CBC', $encryptionKey, 0, substr(hash('sha256', $encryptionKey), 0, 16));
+    return $encryptedData;
+}
+
+
     function userExists($username, $conn) {
         $stmt = $conn->prepare("SELECT * FROM users WHERE username = ?");
         $stmt->bind_param("s", $username);
@@ -25,10 +35,13 @@ if (isset($_POST['submit'])) {
         return $num_rows > 0;
     }
 
+    $newUsername = encrypt($_POST['new_username']);
+    $newPassword = encrypt($_POST['new_password']);
+
     if (userExists($newUsername, $conn)) {
         // User with the provided username or email already exists
         echo "Username already exists.";
-    } else { // Insert the new user into the database
+    } else { // Insert the new user into the database   
         $query = "INSERT INTO users (username, password) VALUES ('$newUsername', '$newPassword')";
         
         if ($conn->query($query) === TRUE) {

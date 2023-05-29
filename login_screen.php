@@ -13,10 +13,23 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+function encrypt($data)
+{
+    // Perform encryption logic here (e.g., using a secure encryption algorithm)
+    // ...
+    $encryptionKey ="7075166676";
+    $encryptedData = openssl_encrypt($data, 'AES-256-CBC', $encryptionKey, 0, substr(hash('sha256', $encryptionKey), 0, 16));
+    return $encryptedData;
+}  
+
+
 // Function to validate user credentials
 function validateUser($username, $password)
 {
     global $conn;
+
+    $username = encrypt($_POST['username']);
+    $password = encrypt($_POST['password']);
 
     // SQL query to check if the username and password exist in the database
     $query = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";

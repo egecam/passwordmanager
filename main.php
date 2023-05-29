@@ -25,7 +25,7 @@ function encrypt($data)
 {
     // Perform encryption logic here (e.g., using a secure encryption algorithm)
     // ...
-    $encryptionKey = 'your_encryption_key';
+    $encryptionKey =  "7075166676";
     $encryptedData = openssl_encrypt($data, 'AES-256-CBC', $encryptionKey, 0, substr(hash('sha256', $encryptionKey), 0, 16));
     return $encryptedData;
 }
@@ -35,7 +35,7 @@ function decrypt($encryptedData)
 {
     // Perform decryption logic here (e.g., using the same encryption algorithm)
     // ...
-    $encryptionKey = 'your_encryption_key';
+    $encryptionKey =  "7075166676";
     $decryptedData = openssl_decrypt($encryptedData, 'AES-256-CBC', $encryptionKey, 0, substr(hash('sha256', $encryptionKey), 0, 16));
     return $decryptedData;
 }
