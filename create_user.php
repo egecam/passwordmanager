@@ -3,7 +3,7 @@ if (isset($_POST['submit'])) {
     $servername = "localhost";
     $username = "root";
     $password = "";
-    $dbname = "users";
+    $dbname = "passwordmanager";
     
     $conn = new mysqli($servername, $username, $password, $dbname);
     
@@ -16,7 +16,7 @@ if (isset($_POST['submit'])) {
     $newPassword = $_POST['new_password'];
     
     // Insert the new user into the database
-    $query = "INSERT INTO $dbname (username, password) VALUES ('$newUsername', '$newPassword')";
+    $query = "INSERT INTO users (username, password) VALUES ('$newUsername', '$newPassword')";
     
     if ($conn->query($query) === TRUE) {
         echo "New user created successfully! Will redirect in 5 seconds...";

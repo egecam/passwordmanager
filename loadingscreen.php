@@ -3,8 +3,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$database = "users";
-$database2 = "userdata";
+$database = "passwordmanager";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password);
@@ -37,21 +36,14 @@ if ($conn->query($sql) === TRUE) {
     echo "Error creating table: " . $conn->error;
 }
 
-$sql = "CREATE DATABASE IF NOT EXISTS $database2";
-if ($conn->query($sql) === TRUE) {
-    echo "Database created successfully\n";
-} else {
-    echo "Error creating database: " . $conn->error;
-}
-
-// Select the database
-$conn->select_db($database2);
 
 // Create table
 $sql = "CREATE TABLE IF NOT EXISTS userdata (
-    user_id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    data_id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(30) NOT NULL,
-    password VARCHAR(30) NOT NULL
+    password VARCHAR(30) NOT NULL,
+    user_id INT(6) UNSIGNED,
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
 )";
 if ($conn->query($sql) === TRUE) {
     echo "Table created successfully\n";

@@ -9,7 +9,7 @@ function linkResource($rel, $href)
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "userdata";
+$dbname = "passwordmanager";
 
 
 // Establish a connection to the database
@@ -78,7 +78,7 @@ if (isset($_POST['submit'])) {
 
 
 // Retrieve data from the database
-$sql = "SELECT user_id, username, password FROM userdata";
+$sql = "SELECT * FROM userdata";
 $result = $conn->query($sql);
 
 
@@ -110,7 +110,7 @@ $result = $conn->query($sql);
                     <td><?php echo $login['username']; ?></td>
                     <td><?php echo $login['password']; ?></td>
                     <td>
-                    <?php echo "<td><a href='delete.php?user_id=".$row["user_id"]."'> <button>Delete</button></a></td>"; ?>
+                    <?php echo "<td><a href='delete.php?data_id=".$row["data_id"]."'> <button>Delete</button></a></td>"; ?>
                     </td>
                 </tr>
             <?php } ?>

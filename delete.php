@@ -2,7 +2,7 @@
 $host = "localhost";
 $username = "root";
 $password = "";
-$database = "userdata";
+$database = "passwordmanager";
 
 // Create a connection
 $conn = new mysqli($host, $username, $password, $database);
@@ -13,11 +13,11 @@ if ($conn->connect_error) {
 }
 
 // Check if the id parameter is set
-if (isset($_GET["user_id"])) {
-    $id = $_GET["user_id"];
+if (isset($_GET["data_id"])) {
+    $id = $_GET["data_id"];
     
     // Perform the delete operation
-    $sql = "DELETE FROM userdata WHERE user_id = ?";
+    $sql = "DELETE FROM userdata WHERE data_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id);
 
