@@ -129,6 +129,8 @@ $result = $conn->query($sql);
 
         <input type="submit" name="submit" value="Create Data">
     </form>
+    <br>
+    <?php echo "<td><a href='login_screen.php'> <button>Logout</button></a></td>"; ?>
 </body>
 
 </html>
