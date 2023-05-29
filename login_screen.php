@@ -18,10 +18,10 @@ function encrypt($data)
 {
     // Perform encryption logic here (e.g., using a secure encryption algorithm)
     // ...
-    $encryptionKey ="7075166676";
+    $encryptionKey = "7075166676";
     $encryptedData = openssl_encrypt($data, 'AES-256-CBC', $encryptionKey, 0, substr(hash('sha256', $encryptionKey), 0, 16));
     return $encryptedData;
-}  
+}
 
 
 // Function to validate user credentials

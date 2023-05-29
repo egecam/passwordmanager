@@ -1,9 +1,5 @@
 <?php
 session_start();
-function linkResource($rel, $href)
-{
-    echo "<link rel='{$rel}' href='{$href}'>";
-}
 
 // Database connection details
 $servername = "localhost";
@@ -25,7 +21,7 @@ function encrypt($data)
 {
     // Perform encryption logic here (e.g., using a secure encryption algorithm)
     // ...
-    $encryptionKey =  "7075166676";
+    $encryptionKey = "7075166676";
     $encryptedData = openssl_encrypt($data, 'AES-256-CBC', $encryptionKey, 0, substr(hash('sha256', $encryptionKey), 0, 16));
     return $encryptedData;
 }
@@ -35,7 +31,7 @@ function decrypt($encryptedData)
 {
     // Perform decryption logic here (e.g., using the same encryption algorithm)
     // ...
-    $encryptionKey =  "7075166676";
+    $encryptionKey = "7075166676";
     $decryptedData = openssl_decrypt($encryptedData, 'AES-256-CBC', $encryptionKey, 0, substr(hash('sha256', $encryptionKey), 0, 16));
     return $decryptedData;
 }
@@ -97,27 +93,31 @@ $result = $conn->query($sql);
 
     <h3>Login Information:</h3>
     <table>
-    <thead>
-        <tr>
-            <th>Username</th>
-            <th>Password</th>
-        </tr>
-    </thead>
-    <tbody>
-        
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Password</th>
+            </tr>
+        </thead>
+        <tbody>
+
             <?php foreach ($logins as $login) { ?>
                 <?php $row = $result->fetch_assoc(); ?>
                 <tr>
-                    <td><?php echo $login["username"] ?></td>
-                    <td><?php echo $login['password']; ?></td>
                     <td>
-                    <?php echo "<td><a href='delete.php?data_id=".$row["data_id"]."'> <button>Delete</button></a></td>"; ?>
+                        <?php echo $login["username"] ?>
+                    </td>
+                    <td>
+                        <?php echo $login['password']; ?>
+                    </td>
+                    <td>
+                        <?php echo "<td><a href='delete.php?data_id=" . $row["data_id"] . "'> <button>Delete</button></a></td>"; ?>
                     </td>
                 </tr>
             <?php } ?>
 
-    </tbody>
-</table>
+        </tbody>
+    </table>
 
     <h3>Create New Data:</h3>
     <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -130,7 +130,7 @@ $result = $conn->query($sql);
         <input type="submit" name="submit" value="Create Data">
     </form>
     <br>
-    <?php echo "<td><a href='login_screen.php'> <button>Logout</button></a></td>"; ?>
+    <td><a href="login_screen.php"> <button>Logout</button></a></td>
 </body>
 
 </html>
