@@ -13,6 +13,7 @@ Online encrypted password manager with PHP, MySQL and MariaDB.
 6. Functions **encrypt** and **decrypt** handles the encryption. Encrypts the data after user creation, decrypts it after a login input comes. An unencrypt data is not located on the database.
 7. After logging in, respective user data represented on **main.php** (this is why it is called **main**). It is important to note that this data is also encrypted before sending it to the database.
 8. Delete button simply deletes the data (**delete.php**). The logic behind a seperate PHP script is, **delete.php** pulls the respective userdata id and this helps to delete the specific data from database. After the job is done, redirects back to **main.php**.
+9. At Windows use mysql -u root -p to log in to MySql in command prompt (Password is empty.)
 
 ## Authors
 
